@@ -1,0 +1,41 @@
+<div class="max-w-4xl mx-auto p-6 bg-white rounded shadow">
+    <h2 class="text-2xl text-gray-400 mb-6">Usuario</h2>
+    <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <input type="hidden" name="id_usuario" id="id_usuario" value="">
+        {% csrf_token %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+            <input type="text" name="nombre" id="nombre_usuario" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+            <input type="text" name="apellido" id="apellido_usuario" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Número de Documento</label>
+            <input type="text" name="numero_documento" id="documento_usuario" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Correo Electronico</label>
+            <input type="email" name="correo" id="usuario_correo" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+            <input type="password" name="password" id="usuario_contraseña" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-600 mb-1">Rol</label>
+            <select name="rol" id="usuario_rol" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                {% for rol in roles %}
+                    <option value="{{ rol.id_rol }}">{{ rol.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="md:col-span-2 text-center">
+            <button type="submit" class="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                <i class="fas fa-user-plus"></i> Guardar
+            </button>
+        </div>
+    </form>
+</div>
+

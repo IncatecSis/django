@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+    <link rel="shortcut icon" href="https://static.vecteezy.com/system/resources/previews/012/042/492/original/star-3d-icon-gold-png.png">
+
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-gray-100">
+    {% include 'reutilizar/plantilla.html' %}
+
+    <main class="ml-64 p-6">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
+    {% if messages %}
+    <script>
+        {% for message in messages %}
+        Swal.fire({
+            icon: '{% if message.tags == "success" %}success{% else %}error{% endif %}',
+            title: '{{ message }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+        {% endfor %}
+    </script>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

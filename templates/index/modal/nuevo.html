@@ -1,0 +1,36 @@
+<div class="max-w-4xl mx-auto p-6 bg-white rounded shadow">
+    <h2 class="text-2xl text-gray-400 mb-6">Internos</h2>
+    <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <input type="hidden" name="id_detenido" id="id_detenido" value="">
+        {% csrf_token %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+            <input type="text" name="nombre" id="NombreDetenido" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+            <input type="text" name="apellido" id="ApellidoDetenido" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Número de Documento</label>
+            <input type="text" name="documento" id="NumeroDocumento" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Ingreso</label>
+            <input type="datetime-local" name="fecha_ingreso" id="fechaIn" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Salida</label>
+            <input type="datetime-local" name="fecha_salida" id="fechaSa" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
+        <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Historial</label>
+            <textarea name="historial" rows="3" id="HistorialDetenido" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"></textarea>
+        </div>
+        <div class="md:col-span-2 text-center">
+            <button type="submit" class="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                <i class="fas fa-user-plus"></i> Guardar
+            </button>
+        </div>
+    </form>
+</div>

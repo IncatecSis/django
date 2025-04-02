@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+
+{% block content %}
+<div class="bg-white rounded shadow px-4 py-6 items-center">
+    <div>
+        <h2 class="text-2xl text-gray-600 uppercase text-center">en construcción!!</h2>
+    </div>
+    <img src="https://media.tenor.com/XzTFwGkc40IAAAAM/bob-the-builder-fix-it.gif" 
+            alt="Bob the Builder"
+            class="w-96 h-auto mx-auto rounded" />
+</div>
+<div id="RolPopup" class="popup" style="display:none;">
+    <div class="popup-content">
+        <span data-close="RolPopup" class="close mr-6">&times;</span>
+        {% include 'index/parametros/rol.html' %}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+    {{ block.super }}
+{% endblock %}

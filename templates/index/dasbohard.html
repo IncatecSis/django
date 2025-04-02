@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded shadow p-6">
+    <div class="p-8">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h2 class="text-2xl text-gray-600">Panel de Control</h2>
+                <p class="text-gray-600">Bienvenido, 
+                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-600">
+                        {{ request.session.usuario_nombre }}
+                    </span>
+                </p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button type="button" data-popup="nuevoUsuarioPopup" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    <i class="fas fa-plus mr-2"></i>Nuevo Interno
+                </button>
+                <div class="relative">
+                    <input type="text" id="buscar_nombre" placeholder="Buscar..." 
+                        class="px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                </div>
+                <p id="no_encontrado" class="text-center text-sm text-red-500 hidden">No se encontró un usuario</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-600">Total Internos</p>
+                        <h3 class="text-2xl font-bold">{{ detenidos|length }}</h3>
+                    </div>
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-users text-blue-600"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-600">Incidentes Activos</p>
+                        <h3 class="text-2xl font-bold">{{ incidentes }}</h3>
+                    </div>
+                    <div class="bg-red-100 p-3 rounded-full">
+                        <i class="fas fa-exclamation-circle text-red-600"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-600">Visitas Hoy</p>
+                        <h3 class="text-2xl font-bold">12</h3>
+                    </div>
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <i class="fas fa-calendar text-green-600"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-600">Alertas</p>
+                        <h3 class="text-2xl font-bold">5</h3>
+                    </div>
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <i class="fas fa-bell text-yellow-600"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow mb-8">
+            <div class="p-4 border-b">
+                <h3 class="text-xl text-gray-600">Lista de Internos</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full"  id="internos">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Número de Documento</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bloque</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Riesgo</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {%  for detenido in detenidos %}
+                        <tr>
+                            <td class="px-6 py-4 text-xs text-gray-700">00{{ detenido.id_detenido }}</td>
+                            <td class="px-6 py-4 text-xs text-gray-700">{{ detenido.nombre }} {{ detenido.apellido }}</td>
+                            <td class="px-6 py-4 text-xs text-gray-700">{{ detenido.documento_identidad }}</td>
+                            <td class="px-6 py-4 text-xs text-gray-700">Bloque A</td>
+                            <td class="px-6 py-4 text-xs text-gray-700">
+                                {% if detenido.estado %}
+                                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 text-xs text-gray-700">ACTIVO</span>
+                                {% else %}
+                                    <span class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800 text-xs text-gray-700">INACTIVO</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800 text-xs text-gray-700">Medio</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <button class="text-blue-600 hover:text-blue-800 mr-3 btnEditarInt"
+                                    data-id="{{ detenido.id_detenido }}"
+                                    data-nombre="{{ detenido.nombre }}"
+                                    data-apellido="{{ detenido.apellido }}"
+                                    data-documento="{{ detenido.documento_identidad }}"
+                                    data-fecha="{{ detenido.fecha_ingreso|date:'Y-m-d H:i' }}"
+                                    data-fecha-salida="{{ detenido.fecha_salida|date:'Y-m-d H:i' }}"
+                                    data-historial="{{ detenido.historial }}"
+                                    >
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="text-blue-600 hover:text-blue-800">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="px-6 py-4 text-center text-gray-500">No hay internos registrados</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow">
+            <div class="p-4 border-b">
+                <h3 class="text-xl text-gray-600">Incidentes Recientes</h3>
+            </div>
+            <div class="p-4">
+                <div class="space-y-4">
+                    {% for incidente in incidentes_recientes %}
+                    <div class="border-l-4 border-red-500 bg-red-50 p-4">
+                        <div class="flex justify-between">
+                            <h4 class="font-medium text-sm text-gray-700">{{ incidente.descripcion|truncatechars:40 }}</h4>
+                            <span class="text-xs text-red-700">
+                                {{ incidente.fecha|timesince }} atrás
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-700 mt-1">
+                            Detenido: {{ incidente.id_detenido.nombre }} {{ incidente.id_detenido.apellido }}
+                        </p>
+                    </div>
+                    {% empty %}
+                    <div class="text-gray-500 text-xs">No hay incidentes recientes.</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div> 
+<div id="nuevoUsuarioPopup" class="popup_o" style="display:none;">
+    <div class="popup-content_o">
+        <span data-close="nuevoUsuarioPopup" class="close my-4 mr-6">&times;</span>
+        {% include 'index/modal/nuevo.html' %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    {{ block.super }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputBuscar = document.getElementById('buscar_nombre');
+            const mensaje = document.getElementById('no_encontrado');
+            const tabla = document.getElementById('internos');
+
+            inputBuscar.addEventListener('input', function () {
+                const termino = inputBuscar.value.toLowerCase();
+                const filas = tabla.querySelectorAll('tbody tr');
+                let coincidencias = false;
+
+                filas.forEach(fila => {
+                    const colNombre = fila.cells[1].textContent.toLowerCase();
+
+                    if(colNombre.includes(termino)) {
+                        fila.style.display = '';
+                        coincidencias = true;
+                    }else {
+                        fila.style.display = 'none';
+                    }
+                });
+                mensaje.style.display = (termino && !coincidencias) ? 'block':'none';
+            })
+        })
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btnEditarInt').forEach(btn=> {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id')
+                    const nombre = this.getAttribute('data-nombre')
+                    const apellido = this.getAttribute('data-apellido')
+                    const documento = this.getAttribute('data-documento')
+                    const fecha = this.getAttribute('data-fecha')
+                    const fecha_salida = this.getAttribute('data-fecha-salida')
+                    const historial = this.getAttribute('data-historial')
+
+                    document.getElementById('id_detenido').value = id;
+                    document.getElementById('NombreDetenido').value = nombre
+                    document.getElementById('ApellidoDetenido').value = apellido
+                    document.getElementById('NumeroDocumento').value = documento
+                    document.getElementById('fechaIn').value = fecha
+                    document.getElementById('fechaSa').value = fecha_salida
+                    document.getElementById('HistorialDetenido').value = historial
+
+                    document.getElementById('nuevoUsuarioPopup').style.display = 'block';
+                })
+            })
+            document.querySelectorAll('[data-close]').forEach(btn=>{
+                btn.addEventListener('click', function() {
+                    const Popup = btn.getAttribute('data-close')
+                    document.getElementById(Popup).style.display = 'none';
+                })
+            })
+        })
+    </script>
+{% endblock %}
+

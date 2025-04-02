@@ -1,0 +1,57 @@
+<div class="fixed left-0 top-0 w-64 h-full bg-blue-900 p-4">
+    <div class="flex items-center justify-center mb-8">
+        <h1 class="text-white text-xl font-bold">Sistema de Control</h1>
+    </div>
+    <nav>
+        <ul class="space-y-2">
+            <li>
+                <a href="{% url 'sistema:dasbohard' %}" class="flex items-center text-white p-3 rounded-lg bg-blue-800">
+                    <i class="fas fa-home w-6"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sistema:usuarios' %}" class="flex items-center text-white p-3 rounded-lg hover:bg-blue-800">
+                    <i class="fas fa-users w-6"></i>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sistema:parametros' %}" class="flex items-center text-white p-3 rounded-lg hover:bg-blue-800">
+                    <i class="fa-solid fa-users-gear w-6"></i>
+                    <span>Parámetros</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sistema:incidentes' %}" class="flex items-center text-white p-3 rounded-lg hover:bg-blue-800">
+                    <i class="fas fa-exclamation-circle w-6"></i>
+                    <span>Incidentes</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center text-white p-3 rounded-lg hover:bg-blue-800">
+                    <i class="fas fa-calendar w-6"></i>
+                    <span>Visitas</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center text-white p-3 rounded-lg hover:bg-blue-800">
+                    <i class="fas fa-file-alt w-6"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sistema:medicos' %}" class="flex items-center text-white p-3 rounded-lg hover:bg-blue-800">
+                    <i class="fa-solid fa-user-doctor w-6"></i>
+                    <span>Personal Médico</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}" class="flex items-center text-white p-3 rounded-lg hover:bg-blue-800">
+                    <i class="fa fa-reply w-6"></i>
+                    <span>Cerrar sesión</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
