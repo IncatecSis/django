@@ -16,9 +16,9 @@
     {% block head %}{% endblock %}
 </head>
 <body class="bg-gray-100" x-data="{ open: false }">
-
     <button 
-        @click="open = !open" 
+        x-show="!open"
+        @click="open = true" 
         class="md:hidden fixed top-4 left-4 z-50 bg-red-500 text-white p-2 rounded-full shadow-lg"
         aria-label="Abrir menú"
     >
@@ -27,7 +27,10 @@
 
     {% include 'reutilizar/plantilla.html' %}
 
-    <main :class="open ? 'blur-sm pointer-events-none select-none' : ''" class="transition-all duration-300 md:ml-64 p-6">
+    <main 
+        :class="open ? 'blur-sm pointer-events-none select-none' : ''" 
+        class="transition-all duration-300 md:ml-64 p-6"
+    >
         {% block content %}{% endblock %}
     </main>
 
