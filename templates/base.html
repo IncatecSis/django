@@ -11,26 +11,12 @@
     <link rel="stylesheet" href="{% static 'css/modal.css' %}">
     <link rel="shortcut icon" href="https://static.vecteezy.com/system/resources/previews/012/042/492/original/star-3d-icon-gold-png.png">
 
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-
     {% block head %}{% endblock %}
 </head>
-<body class="bg-gray-100" x-data="{ open: false }">
-    <button 
-        x-show="!open"
-        @click="open = true" 
-        class="md:hidden fixed top-4 left-4 z-50 bg-red-500 text-white p-2 rounded-full shadow-lg"
-        aria-label="Abrir menú"
-    >
-        ❤️
-    </button>
-
+<body class="bg-gray-100">
     {% include 'reutilizar/plantilla.html' %}
 
-    <main 
-        :class="open ? 'blur-sm pointer-events-none select-none' : ''" 
-        class="transition-all duration-300 md:ml-64 p-6"
-    >
+    <main class="ml-64 p-6">
         {% block content %}{% endblock %}
     </main>
 
